@@ -36,6 +36,23 @@ body {
 
 .container {
     outline: 1px solid var(--light-color);
-    width: 800px;
-    height: 600px;
+    width: 650px;
+    height: 450px;
+}
+
+.admin-panel-button {
+    appearance: none;
+    background: var(--medium-dark-color);
+    color: var(--light-color);
+    border: 1px solid var(--light-color);
+    padding: 3px;
+}
+
+.admin-panel-button:hover {
+    opacity: .75;
+}
+
+.reset-app {
+    float: right;
+
 }

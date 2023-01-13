@@ -1,26 +1,51 @@
 export default class Game {
     constructor(config) {
         this.container = config.container;
+        // Stretch to the container's size
+        const containerSize = this.container.getBoundingClientRect();
+        this.windowSize = { width: containerSize.width, height: containerSize.height };
         this.canvas;
-        this.size = config.dimensions || { width: 800, height: 500 };
 
-
-        config.autoStart && this.init();
+        // Start app if autoStart is on
+        config.autoStart && (() => {
+            this.init();
+            this.startGameLoop();
+        })();
     }
 
     init() {
-        console.log(this.container.style.width);
         this.canvas = this.createCanvas({ width: this.container.style.width, height: this.container.style.height });
-    }
-
-    createCanvas({ width, height }) {
-        console.log('creating canvas');
-        this.canvas = document.createElement('canvas');
-        this.canvas.setAttribute('id', 'main-canvas');
-        this.canvas.setAttribute('height', this.size.width);
-        this.canvas.setAttribute('width', this.size.height);
         this.container.appendChild(this.canvas);
+
+        this.canvas.ctx = this.canvas.getContext('2d');
+
     }
 
+    createCanvas() {
+
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('id', 'main-canvas');
+        canvas.setAttribute('height', this.windowSize.width);
+        canvas.setAttribute('width', this.windowSize.height);
+
+        this.container.appendChild(canvas);
+
+        console.log('created main canvas');
+
+        return canvas;
+    }
+
+    startGameLoop() {
+        this.update();
+    }
+
+    update() {
+        const { canvas } = this;
+        const { ctx } = canvas;
+
+        ctx.fillRect(50, 50, 50, 50);
+
+        requestAnimationFrame(() => this.update());
+    }
 
 }
