@@ -1,30 +1,38 @@
-import utils from "./utils.js";
+import utils from './utils.js';
+import Map from './Map.js';
 
 export default class Game {
     constructor(config) {
         this.container = config.container;
 
 
-        this.windowSize = { width: config.tileSize * config.tilesOnScreen.x, height: config.tileSize * config.tilesOnScreen.y };
-        this.canvas;
+        this.windowSize = { width: config.tileSize * config.numberOfTilesOnScreen.x, height: config.tileSize * config.numberOfTilesOnScreen.y };
+        this.canvas = null;
+        this.currentMap = null;
+        this.tileOffset = { x: 0, y: 0 };
 
-        this.currentMap = window.maps.demoMap;
-        this.numberOfTilesOnScreen = config.tilesOnScreen;
+
+        this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
 
         this.tileSize = config.tileSize;
 
         // Start app if autoStart is on
         config.autoStart && (() => {
             this.init();
-            this.startGameLoop();
+            this.update();
         })();
     }
 
     init() {
         this.canvas = this.createCanvas();
         this.canvas.ctx = this.canvas.getContext('2d');
-
         this.container.appendChild(this.canvas);
+        this.currentMap = new Map({
+            map: window.maps.demoMap,
+            canvas: this.canvas,
+            numberOfTilesOnScreen: this.numberOfTilesOnScreen,
+            tileSize: this.tileSize
+        });
     }
 
     createCanvas() {
@@ -45,70 +53,18 @@ export default class Game {
         return canvas;
     }
 
-    startGameLoop() {
-        this.update();
-        this.render();
-    }
 
     update() {
-        requestAnimationFrame(() => this.update());
+        this.currentMap.update();
+
+        this.render(this.tileOffset);
+
     }
 
-
-    render(config = {}) {
-        const { canvas, tileSize, currentMap: map, numberOfTilesOnScreen } = this;
-        const { ctx } = canvas;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-
-        // Temp controls
-        window.onkeydown = (e) => {
-
-            if (e.code === 'ArrowLeft') tileOffset.x -= 1;
-            if (e.code === 'ArrowRight') tileOffset.x += 1;
-            if (e.code === 'ArrowUp') tileOffset.y -= 1;
-            if (e.code === 'ArrowDown') tileOffset.y += 1;
-            this.render({ tileOffset });
-        }
-
-
-        const colorMap = { g: 'green', s: 'brown', w: 'cyan', x: 'white' };
-        const tileOffset = config.tileOffset || { x: 0, y: 0 };
-
-        // Calculate what area of the grid we actually want to render
-        const minX = Math.max(0, tileOffset.x);
-        const minY = Math.max(0, tileOffset.y);
-        const maxY = Math.min(numberOfTilesOnScreen.y + minY, map.tiles[0].length);
-        const maxX = Math.min(numberOfTilesOnScreen.x + minX, map.tiles.length);
-
-
-        // Render
-        for (let x = minX; x < maxX; x++) {
-            for (let y = minY; y < maxY; y++) {
-                const tile = map.tiles[x][y];
-                ctx.fillStyle = colorMap[tile];
-                ctx.fillRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
-                ctx.strokeRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
-            }
-        }
-
-        this.renderObjects(tileOffset);
+    render(tileOffset) {
+        this.currentMap.render(tileOffset);
+        this.currentMap.renderObjects(tileOffset);
     }
-
-    renderObjects(tileOffset) {
-        const { canvas, tileSize, currentMap: map, numberOfTilesOnScreen } = this;
-        const { ctx } = canvas;
-
-
-
-        for (let obj of map.objects) {
-            console.log(obj.id);
-            ctx.fillStyle = obj.color;
-            ctx.fillRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
-        }
-    }
-
 
 
 }

@@ -8,7 +8,7 @@ import Game from "./Scripts/Game.js";
             autoStart: true,
             container: document.querySelector('.container'), 
             tileSize: 40,
-            tilesOnScreen: {x: 10, y: 10},
+            numberOfTilesOnScreen: {x: 10, y: 10},
         };
 
         console.log(gameConfig);
