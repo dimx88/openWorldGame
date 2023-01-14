@@ -4,10 +4,14 @@ import Game from "./Scripts/Game.js";
         console.log('running OpenWorldGame project...');
 
         const gameConfig = { 
+            // Window size is tile size multiplied by number of tiles on screen
             autoStart: true,
             container: document.querySelector('.container'), 
-            windowSize: {width: 600, height: 600}
+            tileSize: 40,
+            tilesOnScreen: {x: 10, y: 10},
         };
+
+        console.log(gameConfig);
 
         let game = new Game(gameConfig);
 

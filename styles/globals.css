@@ -17,6 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
 }
 
 .marg-bottom-20 {
@@ -35,7 +36,11 @@ body {
 /* Main App container */
 
 .container {
-    outline: 1px solid var(--light-color);
+
+}
+
+#main-canvas {
+    outline: 1px solid #ddd;
 }
 
 .admin-panel-button {

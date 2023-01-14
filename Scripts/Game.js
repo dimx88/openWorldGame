@@ -5,10 +5,13 @@ export default class Game {
         this.container = config.container;
 
 
-        this.windowSize = config.windowSize || { width: containerSize.width, height: containerSize.height };
+        this.windowSize = { width: config.tileSize * config.tilesOnScreen.x, height: config.tileSize * config.tilesOnScreen.y };
         this.canvas;
 
         this.currentMap = window.maps.demoMap;
+        this.numberOfTilesOnScreen = config.tilesOnScreen;
+
+        this.tileSize = config.tileSize;
 
         // Start app if autoStart is on
         config.autoStart && (() => {
@@ -22,11 +25,10 @@ export default class Game {
         this.canvas.ctx = this.canvas.getContext('2d');
 
         this.container.appendChild(this.canvas);
-
     }
 
     createCanvas() {
-        // ...Should the canvas be provided instead of created here?
+        // ...Should the canvas be provided rather than created here?
 
         // Remove #main-canvas if already exists
         document.querySelector('#main-canvas')?.remove();
@@ -44,8 +46,8 @@ export default class Game {
     }
 
     startGameLoop() {
-        this.render();
         this.update();
+        this.render();
     }
 
     update() {
@@ -55,25 +57,52 @@ export default class Game {
         requestAnimationFrame(() => this.update());
     }
 
-    async render() {
-        const { canvas } = this;
+    drawFakePlayer() {
+        const { canvas, tileSize, currentMap: map, numberOfTilesOnScreen } = this;
         const { ctx } = canvas;
-        const { currentMap: map } = this;
-        const tileSize = 20;
+        ctx.fillStyle = 'gold';
+        ctx.fillRect(tileSize * 3, tileSize * 3, tileSize, tileSize);
+        ctx.fillStyle = 'orange';
+        ctx.font = '20px Arial';
+        ctx.fillText('P', tileSize * 3 + tileSize/2, tileSize * 3 + tileSize/2, tileSize, tileSize);
+    }
 
-        ctx.translate(50, 50);
+    render(config = {}) {
+        const { canvas, tileSize, currentMap: map, numberOfTilesOnScreen } = this;
+        const { ctx } = canvas;
 
-        // Render map
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+        // Temp controls
+        window.onkeydown = (e) => {
+
+            if (e.code === 'ArrowLeft') tileOffset.x -= 1;
+            if (e.code === 'ArrowRight') tileOffset.x += 1;
+            if (e.code === 'ArrowUp') tileOffset.y -= 1;
+            if (e.code === 'ArrowDown') tileOffset.y += 1;
+            this.render({ tileOffset });
+            this.drawFakePlayer();
+        }
+
+
         const colorMap = { g: 'green', s: 'brown', w: 'cyan', x: 'white' };
-        let count = 0;
-        let offset = { x: 0, y: 0 };
-        for (let x = offset.x; x < map.tiles.length; x++) {
-            for (let y = offset.y; y < map.tiles[0].length; y++) {
+        const tileOffset = config.tileOffset || { x: 0, y: 0 };
+
+        // Calculate what area of the grid we actually want to render
+        const minX = Math.max(0, tileOffset.x);
+        const minY = Math.max(0, tileOffset.y);
+        const maxY = Math.min(numberOfTilesOnScreen.y + minY, map.tiles[0].length);
+        const maxX = Math.min(numberOfTilesOnScreen.x + minX, map.tiles.length);
+
+
+        // Render
+        for (let x = minX; x < maxX; x++) {
+            for (let y = minY; y < maxY; y++) {
                 const tile = map.tiles[x][y];
                 ctx.fillStyle = colorMap[tile];
-                ctx.fillRect((x - offset.x) * tileSize, (y - offset.y) * tileSize, tileSize, tileSize);
-                ctx.strokeRect((x - offset.x) * tileSize, (y - offset.y) * tileSize, tileSize, tileSize);
-                await utils.delay(10);
+                ctx.fillRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
+                ctx.strokeRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
             }
         }
     }
