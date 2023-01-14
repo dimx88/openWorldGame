@@ -51,21 +51,9 @@ export default class Game {
     }
 
     update() {
-
-
-
         requestAnimationFrame(() => this.update());
     }
 
-    drawFakePlayer() {
-        const { canvas, tileSize, currentMap: map, numberOfTilesOnScreen } = this;
-        const { ctx } = canvas;
-        ctx.fillStyle = 'gold';
-        ctx.fillRect(tileSize * 3, tileSize * 3, tileSize, tileSize);
-        ctx.fillStyle = 'orange';
-        ctx.font = '20px Arial';
-        ctx.fillText('P', tileSize * 3 + tileSize/2, tileSize * 3 + tileSize/2, tileSize, tileSize);
-    }
 
     render(config = {}) {
         const { canvas, tileSize, currentMap: map, numberOfTilesOnScreen } = this;
@@ -82,7 +70,6 @@ export default class Game {
             if (e.code === 'ArrowUp') tileOffset.y -= 1;
             if (e.code === 'ArrowDown') tileOffset.y += 1;
             this.render({ tileOffset });
-            this.drawFakePlayer();
         }
 
 
@@ -104,6 +91,21 @@ export default class Game {
                 ctx.fillRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
                 ctx.strokeRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
             }
+        }
+
+        this.renderObjects(tileOffset);
+    }
+
+    renderObjects(tileOffset) {
+        const { canvas, tileSize, currentMap: map, numberOfTilesOnScreen } = this;
+        const { ctx } = canvas;
+
+
+
+        for (let obj of map.objects) {
+            console.log(obj.id);
+            ctx.fillStyle = obj.color;
+            ctx.fillRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
         }
     }
 
