@@ -6,7 +6,7 @@ import Game from "./Scripts/Game.js";
         const gameConfig = { 
             autoStart: true,
             container: document.querySelector('.container'), 
-            windowSize: {width: 500, height: 200}
+            windowSize: {width: 600, height: 600}
         };
 
         let game = new Game(gameConfig);

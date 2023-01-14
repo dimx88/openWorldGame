@@ -2,8 +2,11 @@ export default class Game {
     constructor(config) {
         this.container = config.container;
 
+
         this.windowSize = config.windowSize || { width: containerSize.width, height: containerSize.height };
         this.canvas;
+
+        this.currentMap = window.maps.demoMap;
 
         // Start app if autoStart is on
         config.autoStart && (() => {
@@ -14,9 +17,9 @@ export default class Game {
 
     init() {
         this.canvas = this.createCanvas();
-        this.container.appendChild(this.canvas);
-
         this.canvas.ctx = this.canvas.getContext('2d');
+
+        this.container.appendChild(this.canvas);
 
     }
 
@@ -39,16 +42,47 @@ export default class Game {
     }
 
     startGameLoop() {
+        this.render();
         this.update();
     }
 
     update() {
-        const { canvas } = this;
-        const { ctx } = canvas;
 
-        ctx.fillRect(0, 50, 50, 50);
+
 
         requestAnimationFrame(() => this.update());
     }
+
+    async render() {
+        const { canvas } = this;
+        const { ctx } = canvas;
+        const { currentMap: map } = this;
+        const tileSize = 20;
+
+        // Render map
+        const colorMap = { g: 'green', s: 'brown', w: 'cyan', x: 'white' };
+        let count = 0;
+        let offset = { x: 0, y: 0 };
+        for (let x = offset.x; x < map.tiles.length; x++) {
+            for (let y = offset.y; y < map.tiles[0].length; y++) {
+                const tile = map.tiles[x][y];
+                ctx.fillStyle = colorMap[tile];
+                ctx.fillRect((x - offset.x) * tileSize, (y - offset.y) * tileSize, tileSize, tileSize);
+                ctx.strokeRect((x - offset.x) * tileSize, (y - offset.y) * tileSize, tileSize, tileSize);
+                await this.delay(10);
+            }
+        }
+    }
+
+
+
+    delay(ms) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, ms)
+        });
+    }
+
 
 }
