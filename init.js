@@ -4,19 +4,18 @@ import Game from "./Scripts/Game.js";
         console.log('running OpenWorldGame project...');
 
         const gameConfig = { 
+            autoStart: true,
             container: document.querySelector('.container'), 
-            autoStart: true 
+            windowSize: {width: 500, height: 200}
         };
 
         let game = new Game(gameConfig);
 
-        // game.init();
+        // game.init(); // Not needed if config is set to autoStart
 
         window.reset = () => {
             console.log('restarting...');
             game = new Game(gameConfig);
-            game.init();
-            console.log('Initialized game');
         }
 
 

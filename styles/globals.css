@@ -36,8 +36,6 @@ body {
 
 .container {
     outline: 1px solid var(--light-color);
-    width: 650px;
-    height: 450px;
 }
 
 .admin-panel-button {

@@ -1,9 +1,8 @@
 export default class Game {
     constructor(config) {
         this.container = config.container;
-        // Stretch to the container's size
-        const containerSize = this.container.getBoundingClientRect();
-        this.windowSize = { width: containerSize.width, height: containerSize.height };
+
+        this.windowSize = config.windowSize || { width: containerSize.width, height: containerSize.height };
         this.canvas;
 
         // Start app if autoStart is on
@@ -14,7 +13,7 @@ export default class Game {
     }
 
     init() {
-        this.canvas = this.createCanvas({ width: this.container.style.width, height: this.container.style.height });
+        this.canvas = this.createCanvas();
         this.container.appendChild(this.canvas);
 
         this.canvas.ctx = this.canvas.getContext('2d');
@@ -22,11 +21,15 @@ export default class Game {
     }
 
     createCanvas() {
+        // ...Should the canvas be provided instead of created here?
+
+        // Remove #main-canvas if already exists
+        document.querySelector('#main-canvas')?.remove();
 
         const canvas = document.createElement('canvas');
         canvas.setAttribute('id', 'main-canvas');
-        canvas.setAttribute('height', this.windowSize.width);
-        canvas.setAttribute('width', this.windowSize.height);
+        canvas.setAttribute('width', this.windowSize.width);
+        canvas.setAttribute('height', this.windowSize.height);
 
         this.container.appendChild(canvas);
 
@@ -43,7 +46,7 @@ export default class Game {
         const { canvas } = this;
         const { ctx } = canvas;
 
-        ctx.fillRect(50, 50, 50, 50);
+        ctx.fillRect(0, 50, 50, 50);
 
         requestAnimationFrame(() => this.update());
     }
