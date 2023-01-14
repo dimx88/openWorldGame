@@ -1,3 +1,5 @@
+import utils from "./utils.js";
+
 export default class Game {
     constructor(config) {
         this.container = config.container;
@@ -59,6 +61,8 @@ export default class Game {
         const { currentMap: map } = this;
         const tileSize = 20;
 
+        ctx.translate(50, 50);
+
         // Render map
         const colorMap = { g: 'green', s: 'brown', w: 'cyan', x: 'white' };
         let count = 0;
@@ -69,20 +73,11 @@ export default class Game {
                 ctx.fillStyle = colorMap[tile];
                 ctx.fillRect((x - offset.x) * tileSize, (y - offset.y) * tileSize, tileSize, tileSize);
                 ctx.strokeRect((x - offset.x) * tileSize, (y - offset.y) * tileSize, tileSize, tileSize);
-                await this.delay(10);
+                await utils.delay(10);
             }
         }
     }
 
-
-
-    delay(ms) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, ms)
-        });
-    }
 
 
 }
