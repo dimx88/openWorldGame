@@ -33,6 +33,15 @@ export default class Game {
             numberOfTilesOnScreen: this.numberOfTilesOnScreen,
             tileSize: this.tileSize
         });
+
+        // Temp - todo - make this better
+        window.onkeydown = (e) => {
+            const inputX = Number(e.code === 'ArrowRight') - Number(e.code === 'ArrowLeft');
+            const inputY = Number(e.code === 'ArrowDown') - Number(e.code === 'ArrowUp');
+            this.tileOffset.x += inputX;
+            this.tileOffset.y += inputY;
+            this.update();
+        }
     }
 
     createCanvas() {
@@ -55,6 +64,7 @@ export default class Game {
 
 
     update() {
+        this.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.currentMap.update();
 
         this.render(this.tileOffset);

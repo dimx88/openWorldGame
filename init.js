@@ -7,8 +7,8 @@ import Game from "./Scripts/Game.js";
             // Window size is tile size multiplied by number of tiles on screen
             autoStart: true,
             container: document.querySelector('.container'), 
-            tileSize: 40,
-            numberOfTilesOnScreen: {x: 10, y: 10},
+            tileSize: 20,
+            numberOfTilesOnScreen: {x: 20, y: 20},
         };
 
         console.log(gameConfig);
