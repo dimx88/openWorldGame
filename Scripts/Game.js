@@ -28,18 +28,28 @@ export default class Game {
         this.canvas.ctx = this.canvas.getContext('2d');
         this.container.appendChild(this.canvas);
         this.currentMap = new Map({
-            map: window.maps.demoMap,
+            mapData: window.maps.demoMap,
             canvas: this.canvas,
             numberOfTilesOnScreen: this.numberOfTilesOnScreen,
             tileSize: this.tileSize
         });
 
-        // Temp - todo - make this better
+        // Temp - just to test offset
         window.onkeydown = (e) => {
             const inputX = Number(e.code === 'ArrowRight') - Number(e.code === 'ArrowLeft');
             const inputY = Number(e.code === 'ArrowDown') - Number(e.code === 'ArrowUp');
-            this.tileOffset.x += inputX;
-            this.tileOffset.y += inputY;
+            // this.tileOffset.x += inputX;
+            // this.tileOffset.y += inputY;
+
+            const { player } = this.currentMap;
+            let direction = null;
+            if (e.code === 'ArrowLeft') direction = 'left';
+            if (e.code === 'ArrowRight') direction = 'right';
+            if (e.code === 'ArrowUp') direction = 'up';
+            if (e.code === 'ArrowDown') direction = 'down';
+
+            direction && player.walk(direction);
+            console.log(player.position);
             this.update();
         }
     }
@@ -67,7 +77,7 @@ export default class Game {
         this.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.currentMap.update();
 
-        this.render(this.tileOffset);
+        this.render(this.currentMap.player.position);
 
     }
 

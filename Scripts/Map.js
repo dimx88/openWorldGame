@@ -1,11 +1,15 @@
+import Character from "./Character.js";
+
 export default class Map {
     constructor(config) {
-        this.tiles = config.map.tiles;
-        this.objects = config.map.objects || {};
+        this.tiles = config.mapData.tiles;
+        this.objects = config.mapData.objects || {};
         this.canvas = config.canvas;
         this.ctx = this.canvas.ctx;
         this.tileSize = config.tileSize;
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
+
+        this.player = new Character(config.mapData.player);
     }
 
     update() {
@@ -43,6 +47,14 @@ export default class Map {
             ctx.fillStyle = obj.color;
             ctx.fillRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
         }
+
+        this.renderPlayer(tileOffset);
+    }
+
+    renderPlayer(tileOffset = { x: 0, y: 0 }) {
+        const { player, tileSize } = this;
+        this.ctx.fillStyle = 'yellow';
+        this.ctx.fillRect(0, 0, tileSize, tileSize);
     }
 
 }
