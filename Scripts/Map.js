@@ -2,11 +2,12 @@ import Character from "./Character.js";
 
 export default class Map {
     constructor(config) {
-        this.tiles = config.mapData.tiles;
-        this.objects = config.mapData.objects || {};
         this.canvas = config.canvas;
         this.ctx = this.canvas.ctx;
         this.tileSize = config.tileSize;
+
+        this.tiles = config.mapData.tiles;
+        this.objects = config.mapData.objects || {};
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
 
         this.player = new Character(config.mapData.player);
@@ -34,7 +35,6 @@ export default class Map {
         const maxX = Math.min(numberOfTilesOnScreen.x + minX, this.tiles.length);
 
         // Render
-
         for (let x = minX; x < maxX; x++) {
             for (let y = minY; y < maxY; y++) {
                 const tile = this.tiles[x][y];
@@ -48,13 +48,11 @@ export default class Map {
 
     renderObjects(tileOffset = { x: 0, y: 0 }) {
         const { tileSize, ctx } = this;
-
         for (let obj of this.objects) {
             ctx.fillStyle = obj.color;
             ctx.fillRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
         }
 
-        this.renderPlayer(tileOffset);
     }
 
     renderPlayer(tileOffset = { x: 0, y: 0 }) {

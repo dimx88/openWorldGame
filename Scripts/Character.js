@@ -18,7 +18,6 @@ export default class Character extends GameObject {
             up: { x: this.position.x, y: this.position.y - 1 },
             down: { x: this.position.x, y: this.position.y + 1 },
         }
-
         this.position = positionTable[direction];
     }
 }

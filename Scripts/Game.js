@@ -1,20 +1,23 @@
 import utils from './utils.js';
 import Map from './Map.js';
+import ObjectManager from './ObjectManager.js';
 
 export default class Game {
     constructor(config) {
+        // Display settings
         this.container = config.container;
-
-
         this.windowSize = { width: config.tileSize * config.numberOfTilesOnScreen.x, height: config.tileSize * config.numberOfTilesOnScreen.y };
         this.canvas = null;
-        this.currentMap = null;
-        this.tileOffset = { x: 0, y: 0 };
-
 
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
-
         this.tileSize = config.tileSize;
+        this.tileOffset = { x: 0, y: 0 };
+        
+        // Main game data
+        this.currentMap = null;
+        this.objectManager = null;
+        
+
 
         // Start app if autoStart is on
         config.autoStart && (() => {
@@ -24,31 +27,37 @@ export default class Game {
     }
 
     init() {
+        // Set up canvas
         this.canvas = this.createCanvas();
         this.canvas.ctx = this.canvas.getContext('2d');
         this.container.appendChild(this.canvas);
+        
+        // Temp - start with this map
+        const testMap = window.maps.demoMap;
+
         this.currentMap = new Map({
-            mapData: window.maps.demoMap,
+            mapData: testMap,
             canvas: this.canvas,
             numberOfTilesOnScreen: this.numberOfTilesOnScreen,
             tileSize: this.tileSize
         });
 
+        this.objectManager = new ObjectManager(testMap.objects);
+
         // Temp - just to test offset
         window.onkeydown = (e) => {
             const inputX = Number(e.code === 'ArrowRight') - Number(e.code === 'ArrowLeft');
             const inputY = Number(e.code === 'ArrowDown') - Number(e.code === 'ArrowUp');
-            // this.tileOffset.x += inputX;
-            // this.tileOffset.y += inputY;
 
-            const { player } = this.currentMap;
             let direction = null;
+
             if (e.code === 'ArrowLeft') direction = 'left';
             if (e.code === 'ArrowRight') direction = 'right';
             if (e.code === 'ArrowUp') direction = 'up';
             if (e.code === 'ArrowDown') direction = 'down';
 
-            direction && player.walk(direction);
+            direction && this.currentMap.player.walk(direction);
+
             this.update();
         }
     }
@@ -76,25 +85,26 @@ export default class Game {
         this.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.currentMap.update();
 
-        // this.render(this.currentMap.player.position);
+        this.objectManager.update();
+
         this.render(this.getTileOffset());
 
     }
 
+
+    render(tileOffset) {
+        this.currentMap.render(tileOffset);
+    }
+
+    // Calculates the offset needed to display the player in the center
     getTileOffset() {
         const player = this.currentMap.player;
         const offset = {
             x: player.position.x - ~~(this.numberOfTilesOnScreen.x * 0.5),
             y: player.position.y - ~~(this.numberOfTilesOnScreen.y * 0.5)
         }
-        console.log(offset);
+        // console.log(offset);
         return offset;
     }
-
-    render(tileOffset) {
-        this.currentMap.render(tileOffset);
-        this.currentMap.renderObjects(tileOffset);
-    }
-
 
 }
