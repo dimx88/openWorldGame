@@ -40,7 +40,7 @@ export default class Map {
                 const tile = this.tiles[x][y];
                 ctx.fillStyle = colorMap[tile];
                 ctx.fillRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
-                ctx.strokeRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
+                // ctx.strokeRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
             }
         }
 
@@ -48,17 +48,43 @@ export default class Map {
 
     renderObjects(tileOffset = { x: 0, y: 0 }) {
         const { tileSize, ctx } = this;
+        ctx.save();
         for (let obj of this.objects) {
+            ctx.strokeStyle = 'yellow';
+            ctx.lineWidth = 4;
             ctx.fillStyle = obj.color;
             ctx.fillRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
+            ctx.strokeRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
         }
+        ctx.restore();
 
     }
 
     renderPlayer(tileOffset = { x: 0, y: 0 }) {
         const { player, tileSize, ctx } = this;
+        const eyeSize = 10;
+
+        // 
+        // Temp - draw player. Replace this with a sprite
+        
+        // Head
+        ctx.save();
+
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 8;
+        ctx.shadowOffsetX = 6;
+        ctx.shadowOffsetY = 6;
+        
         this.ctx.fillStyle = 'yellow';
         ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
+
+        ctx.restore();
+
+        // Eyes
+        this.ctx.fillStyle = 'blue';
+        ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, eyeSize, eyeSize);
+        ctx.fillRect((player.position.x - tileOffset.x) * tileSize - eyeSize + tileSize, (player.position.y - tileOffset.y) * tileSize, eyeSize, eyeSize);
+
     }
 
 }

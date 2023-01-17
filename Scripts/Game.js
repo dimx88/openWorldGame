@@ -42,7 +42,7 @@ export default class Game {
             tileSize: this.tileSize
         });
 
-        this.objectManager = new ObjectManager(testMap.objects);
+        this.objectManager = new ObjectManager(this.currentMap.objects, this.currentMap);
 
         // Temp - just to test offset
         window.onkeydown = (e) => {
