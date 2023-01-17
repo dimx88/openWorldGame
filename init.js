@@ -6,11 +6,11 @@ import Game from "./Scripts/Game.js";
         console.log('running OpenWorldGame project...');
 
         const gameConfig = { 
-            // Window size is tile size multiplied by number of tiles on screen
+            // Window size = tileSize x numberOfTilesOnScreen
             autoStart: true,
             container: document.querySelector('.container'), 
             tileSize: 40,
-            numberOfTilesOnScreen: {x: 10, y: 10},
+            numberOfTilesOnScreen: {x: 11, y: 11},  // Currently must use odd values so we can place the character in the middle
         };
 
         console.log(gameConfig);
@@ -19,6 +19,7 @@ import Game from "./Scripts/Game.js";
 
         // game.init(); // Not needed if config is set to autoStart
 
+        
         window.reset = () => {
             console.log('restarting...');
             game = new Game(gameConfig);

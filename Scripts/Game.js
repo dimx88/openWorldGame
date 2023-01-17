@@ -49,7 +49,6 @@ export default class Game {
             if (e.code === 'ArrowDown') direction = 'down';
 
             direction && player.walk(direction);
-            console.log(player.position);
             this.update();
         }
     }
@@ -77,8 +76,19 @@ export default class Game {
         this.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.currentMap.update();
 
-        this.render(this.currentMap.player.position);
+        // this.render(this.currentMap.player.position);
+        this.render(this.getTileOffset());
 
+    }
+
+    getTileOffset() {
+        const player = this.currentMap.player;
+        const offset = {
+            x: player.position.x - ~~(this.numberOfTilesOnScreen.x * 0.5),
+            y: player.position.y - ~~(this.numberOfTilesOnScreen.y * 0.5)
+        }
+        console.log(offset);
+        return offset;
     }
 
     render(tileOffset) {

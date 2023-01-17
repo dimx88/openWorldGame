@@ -3,8 +3,11 @@ import GameObject from "./GameObject.js";
 export default class Character extends GameObject {
     constructor(config) {
         super(config);
-        // Inherited params: position, direction (facing), sprite
-
+        /* Inherited params: 
+            position 
+            direction (facing), 
+            sprite
+        */
         this.name = config.name || 'manWithNoName';
     }
 

@@ -16,7 +16,13 @@ export default class Map {
 
     }
 
-    render(tileOffset = { x: 0, y: 0 }) {
+    render(tileOffset) {
+        this.renderTiles(tileOffset);
+        this.renderObjects(tileOffset);
+        this.renderPlayer(tileOffset);
+    }
+
+    renderTiles(tileOffset = { x: 0, y: 0 }) {
         const { canvas, tileSize, numberOfTilesOnScreen, ctx } = this;
 
         const colorMap = { g: 'green', s: 'brown', w: 'cyan', x: 'white' };
@@ -41,7 +47,7 @@ export default class Map {
     }
 
     renderObjects(tileOffset = { x: 0, y: 0 }) {
-        const { canvas, tileSize, numberOfTilesOnScreen, ctx } = this;
+        const { tileSize, ctx } = this;
 
         for (let obj of this.objects) {
             ctx.fillStyle = obj.color;
@@ -52,9 +58,9 @@ export default class Map {
     }
 
     renderPlayer(tileOffset = { x: 0, y: 0 }) {
-        const { player, tileSize } = this;
+        const { player, tileSize, ctx } = this;
         this.ctx.fillStyle = 'yellow';
-        this.ctx.fillRect(0, 0, tileSize, tileSize);
+        ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
     }
 
 }
