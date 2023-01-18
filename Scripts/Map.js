@@ -95,6 +95,11 @@ export default class Map {
 
         ctx.lineWidth = 2;
         ctx.strokeStyle = 'lime';
+        ctx.setLineDash([5]);
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 8;
+        ctx.shadowOffsetX = 6;
+        ctx.shadowOffsetY = 6;
         const selectorPos = player.selector;
         ctx.strokeRect((selectorPos.x - tileOffset.x) * tileSize, (selectorPos.y - tileOffset.y) * tileSize, tileSize, tileSize);
 

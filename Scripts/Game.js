@@ -44,23 +44,34 @@ export default class Game {
 
         this.objectManager = new ObjectManager(this.currentMap.objects, this.currentMap);
 
-        // Temp - for testing
-        window.onkeydown = (e) => {
+        // Start handling input
+        document.addEventListener('keydown', this.handleKeyboardInput.bind(this));
+    }
+
+    handleKeyboardInput(e) {
+        const player = this.currentMap.player;
             let direction = null;
 
+            // WASD -> player interaction selector positioning
             const table = { 'KeyW': 'up', 'KeyA': 'left', 'KeyS': 'down', 'KeyD': 'right' };
-            table[e.code] && this.currentMap.player.updateSelector(table[e.code]);
+            table[e.code] && player.updateSelector(table[e.code]);
 
-
+            // Arrow keys -> player movement
             if (e.code === 'ArrowLeft') direction = 'left';
             if (e.code === 'ArrowRight') direction = 'right';
             if (e.code === 'ArrowUp') direction = 'up';
             if (e.code === 'ArrowDown') direction = 'down';
 
-            direction && this.currentMap.player.walk(direction);
+            direction && player.walk(direction);
+
+            // Spacebar -> interact with tile under player interaction selector
+            if (e.code === 'Space') {
+                console.log(`Interacting with tile (${player.selector.x}, ${player.selector.y})`);
+                this.currentMap.tiles[player.selector.x][player.selector.y] = 'g';
+
+            }
 
             this.update();
-        }
     }
 
     createCanvas() {
@@ -83,17 +94,17 @@ export default class Game {
 
 
     update() {
-        this.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.currentMap.update();
-
+        
         this.objectManager.update();
-
+        
         this.render(this.getTileOffset());
-
+        
     }
-
-
+    
+    
     render(tileOffset) {
+        this.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.currentMap.render(tileOffset);
     }
 
