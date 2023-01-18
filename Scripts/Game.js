@@ -12,11 +12,11 @@ export default class Game {
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
         this.tileSize = config.tileSize;
         this.tileOffset = { x: 0, y: 0 };
-        
+
         // Main game data
         this.currentMap = null;
         this.objectManager = null;
-        
+
 
 
         // Start app if autoStart is on
@@ -31,7 +31,7 @@ export default class Game {
         this.canvas = this.createCanvas();
         this.canvas.ctx = this.canvas.getContext('2d');
         this.container.appendChild(this.canvas);
-        
+
         // Temp - start with this map
         const testMap = window.maps.demoMap;
 
@@ -44,12 +44,13 @@ export default class Game {
 
         this.objectManager = new ObjectManager(this.currentMap.objects, this.currentMap);
 
-        // Temp - just to test offset
+        // Temp - for testing
         window.onkeydown = (e) => {
-            const inputX = Number(e.code === 'ArrowRight') - Number(e.code === 'ArrowLeft');
-            const inputY = Number(e.code === 'ArrowDown') - Number(e.code === 'ArrowUp');
-
             let direction = null;
+
+            const table = { 'KeyW': 'up', 'KeyA': 'left', 'KeyS': 'down', 'KeyD': 'right' };
+            table[e.code] && this.currentMap.player.updateSelector(table[e.code]);
+
 
             if (e.code === 'ArrowLeft') direction = 'left';
             if (e.code === 'ArrowRight') direction = 'right';

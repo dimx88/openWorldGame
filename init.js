@@ -9,11 +9,10 @@ import Game from "./Scripts/Game.js";
             // Window size = tileSize x numberOfTilesOnScreen
             autoStart: true,
             container: document.querySelector('.container'), 
-            tileSize: 40,
+            tileSize: 60,
             numberOfTilesOnScreen: {x: 11, y: 11},  // Currently must use odd values so we can place the character in the middle
         };
 
-        console.log(gameConfig);
 
         let game = new Game(gameConfig);
 

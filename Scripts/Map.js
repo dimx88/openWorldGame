@@ -21,6 +21,7 @@ export default class Map {
         this.renderTiles(tileOffset);
         this.renderObjects(tileOffset);
         this.renderPlayer(tileOffset);
+        this.renderSelector(tileOffset);
     }
 
     renderTiles(tileOffset = { x: 0, y: 0 }) {
@@ -75,15 +76,29 @@ export default class Map {
         ctx.shadowOffsetX = 6;
         ctx.shadowOffsetY = 6;
         
-        this.ctx.fillStyle = 'yellow';
+        ctx.fillStyle = 'yellow';
         ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
 
         ctx.restore();
 
         // Eyes
-        this.ctx.fillStyle = 'blue';
+        ctx.fillStyle = 'blue';
         ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, eyeSize, eyeSize);
         ctx.fillRect((player.position.x - tileOffset.x) * tileSize - eyeSize + tileSize, (player.position.y - tileOffset.y) * tileSize, eyeSize, eyeSize);
+
+    }
+
+    renderSelector(tileOffset = { x: 0, y: 0 }) {
+        const {player, tileSize, ctx} = this;
+
+        ctx.save();
+
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'lime';
+        const selectorPos = player.selector;
+        ctx.strokeRect((selectorPos.x - tileOffset.x) * tileSize, (selectorPos.y - tileOffset.y) * tileSize, tileSize, tileSize);
+
+        ctx.restore();
 
     }
 
