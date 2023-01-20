@@ -28,6 +28,8 @@ export default class Character extends GameObject {
         }
         this.position = positionTable[direction];
         this.updateSelector(direction);
+
+        window.game.soundManager.playOneOfSounds(['step1', 'step2', 'step3']);
     }
 
     setDirection(direction) {

@@ -25,6 +25,10 @@ const utils = {
             y: position.y + (Math.random() > 0.5 ? 1 : -1)
         }
     },
+    
+    getTileAtDirection() {
+        
+    }
 }
 
 export default utils;

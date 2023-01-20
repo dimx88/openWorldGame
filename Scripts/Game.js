@@ -1,6 +1,7 @@
 import utils from './utils.js';
 import Map from './Map.js';
 import ObjectManager from './ObjectManager.js';
+import SoundManager from './SoundManager.js';
 import GameInputManager from './GameInputManager.js';
 
 export default class Game {
@@ -20,6 +21,9 @@ export default class Game {
 
         // Input
         this.inputManager;
+
+        // Sound
+        this.soundManager;
 
         // Start app if autoStart is on
         config.autoStart && (() => {
@@ -50,6 +54,8 @@ export default class Game {
         // Start handling input
         // document.addEventListener('keydown', this.handleKeyboardInput.bind(this));
         this.inputManager = new GameInputManager({ game: this });
+
+        this.soundManager = new SoundManager({});
     }
 
 
