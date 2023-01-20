@@ -1,4 +1,5 @@
 import Character from "./Character.js";
+import Game from "./Game.js";
 
 export default class Map {
     constructor(config) {
@@ -11,6 +12,10 @@ export default class Map {
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
 
         this.player = new Character(config.mapData.player);
+    }
+
+    getDimensions() {
+        return { x: this.tiles.length, y: this.tiles[0].length };
     }
 
     update() {
@@ -50,7 +55,8 @@ export default class Map {
     renderObjects(tileOffset = { x: 0, y: 0 }) {
         const { tileSize, ctx } = this;
         ctx.save();
-        for (let obj of this.objects) {
+        // for (let obj of this.objects) {
+        for (let obj of window.game.objectManager.objects) {
             ctx.strokeStyle = 'yellow';
             ctx.lineWidth = 4;
             ctx.fillStyle = obj.color;
@@ -67,7 +73,7 @@ export default class Map {
 
         // 
         // Temp - draw player. Replace this with a sprite
-        
+
         // Head
         ctx.save();
 
@@ -75,7 +81,7 @@ export default class Map {
         ctx.shadowBlur = 8;
         ctx.shadowOffsetX = 6;
         ctx.shadowOffsetY = 6;
-        
+
         ctx.fillStyle = 'yellow';
         ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
 
@@ -89,7 +95,7 @@ export default class Map {
     }
 
     renderSelector(tileOffset = { x: 0, y: 0 }) {
-        const {player, tileSize, ctx} = this;
+        const { player, tileSize, ctx } = this;
 
         ctx.save();
 

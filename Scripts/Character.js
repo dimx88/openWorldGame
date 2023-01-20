@@ -1,4 +1,6 @@
 import GameObject from "./GameObject.js";
+import Plant from "./Plant.js";
+import utils from "./utils.js";
 
 export default class Character extends GameObject {
     constructor(config) {
@@ -8,6 +10,8 @@ export default class Character extends GameObject {
             direction (facing), 
             sprite
         */
+        this.game = window.game;
+
         this.name = config.name || 'manWithNoName';
         this._selector = { x: 0, y: 0 };
         this.updateSelector(this.direction);
@@ -40,5 +44,16 @@ export default class Character extends GameObject {
             y: Number(direction === 'down') - Number(direction === 'up'),
         };
         this._selector = { x: this.position.x + d.x, y: this.position.y + d.y };
+    }
+
+    onActionKeyDown(e) {
+        // game.currentMap.tiles[this.selector.x][this.selector.y] = 'g';
+        const plant = new Plant({
+            position: this.selector,
+        });
+
+
+        game.objectManager.addObject(plant);
+
     }
 }

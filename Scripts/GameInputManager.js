@@ -1,0 +1,43 @@
+export default class GameInputManager {
+    constructor(config) {
+
+        addEventListener('keydown', this.onKeyDown.bind(this));
+    }
+
+    onKeyDown(e) {
+        // Todo: make better
+
+        const game = window.game;
+        const player = game.currentMap.player;
+        let direction = null;
+
+
+        // WASD -> player interaction selector positioning
+        const TABLE = { 'KeyW': 'up', 'KeyA': 'left', 'KeyS': 'down', 'KeyD': 'right' };
+
+        TABLE[e.code] && player.updateSelector(TABLE[e.code]);
+
+
+
+
+        // Arrow keys -> player movement
+        if (e.code === 'ArrowLeft') direction = 'left';
+        if (e.code === 'ArrowRight') direction = 'right';
+        if (e.code === 'ArrowUp') direction = 'up';
+        if (e.code === 'ArrowDown') direction = 'down';
+
+        if (direction) {
+            e.ctrlKey ? player.updateSelector(direction) : player.walk(direction);
+        }
+
+
+
+        // Action key
+        if (e.code === 'Space') {
+            player.onActionKeyDown(e);
+        }
+        console.log(e);
+
+        game.update();
+    }
+}
