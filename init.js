@@ -19,7 +19,7 @@ import Game from "./Scripts/Game.js";
             // Window size = tileSize x numberOfTilesOnScreen
             autoStart: true,
             container: document.querySelector('.container'), 
-            tileSize: 16,
+            tileSize: 16,  // Pixel dimensions of a single tile
             numberOfTilesOnScreen: {x: 7, y: 7},  // Currently must use odd values so we can place the character in the middle
         };
 

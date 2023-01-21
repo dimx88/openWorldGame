@@ -35,7 +35,9 @@ body {
 
 /* Main App container */
 
-/* .container {} */
+.container {
+    image-rendering: pixelated;
+}
 
 #main-canvas {
     outline: 1px solid #ddd;

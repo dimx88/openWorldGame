@@ -33,6 +33,7 @@ export default class Map {
         const { canvas, tileSize, numberOfTilesOnScreen, ctx } = this;
 
         const colorMap = { g: 'green', s: 'brown', w: 'cyan', x: 'white' };
+        const spriteMap = { g: images.grass, s: images.soil, w: images.water };
 
         // Calculate what area of the grid we actually want to render
         const minX = Math.max(0, tileOffset.x);
@@ -44,9 +45,10 @@ export default class Map {
         for (let x = minX; x < maxX; x++) {
             for (let y = minY; y < maxY; y++) {
                 const tile = this.tiles[x][y];
-                ctx.fillStyle = colorMap[tile];
-                ctx.fillRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
-                // ctx.strokeRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
+                ctx.drawImage(spriteMap[tile], (x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize);
+                // ctx.fillStyle = colorMap[tile];
+                // ctx.fillRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
+
             }
         }
 
@@ -57,11 +59,11 @@ export default class Map {
         ctx.save();
         // for (let obj of this.objects) {
         for (let obj of window.game.objectManager.objects) {
-            ctx.strokeStyle = 'yellow';
-            ctx.lineWidth = 4;
             ctx.fillStyle = obj.color;
             ctx.fillRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
-            ctx.strokeRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
+            // ctx.strokeStyle = 'yellow';
+            // ctx.lineWidth = 1;
+            // ctx.strokeRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
         }
         ctx.restore();
 
@@ -77,13 +79,15 @@ export default class Map {
         // Head
         ctx.save();
 
-        ctx.shadowColor = "black";
+        ctx.shadowColor = 'rgba(236, 255, 91, 0.50)';
+        // ctx.shadowColor = 'rgba(0, 0, 0, 0.50)';
         ctx.shadowBlur = 8;
-        ctx.shadowOffsetX = 6;
-        ctx.shadowOffsetY = 6;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 8;
 
-        ctx.fillStyle = 'yellow';
-        ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
+        // ctx.fillStyle = 'yellow';
+        // ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
+        ctx.drawImage(images.player, (player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize);
 
         ctx.restore();
     }
@@ -93,7 +97,7 @@ export default class Map {
 
         ctx.save();
 
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
         ctx.strokeStyle = 'lime';
         ctx.setLineDash([5]);
         ctx.shadowColor = "black";
