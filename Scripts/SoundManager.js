@@ -1,7 +1,6 @@
 export default class SoundManager {
     constructor(config) {
         this.sounds = {
-            step1: new Audio('../Sounds/bassy_step_1.wav'),
             step2: new Audio('../Sounds/bassy_step_2.wav'),
             step3: new Audio('../Sounds/bassy_step_3.wav'),
         };
@@ -14,7 +13,6 @@ export default class SoundManager {
         this.sounds[id].pause();
         this.sounds[id].currentTime = 0;
         this.sounds[id].play();
-        console.log('playing', id)
     }
 
     playOneOfSounds(arrayOfSounds) {

@@ -1,9 +1,19 @@
 import "./GameData/maps.js";
-
+import AssetLoader from "./Scripts/AssetLoader.js";
 import Game from "./Scripts/Game.js";
+
 (
-    function () {
+    async function () {
         console.log('running OpenWorldGame project...');
+
+        // Load sprites 
+        const loader = new AssetLoader();
+        loader.add('player', './Sprites/player.png');
+        loader.add('soil', './Sprites/soil.png');
+        loader.add('water', './Sprites/water.png');
+        loader.add('grass', './Sprites/grass.png');
+        await loader.loadImages();
+
 
         const gameConfig = { 
             // Window size = tileSize x numberOfTilesOnScreen
@@ -16,12 +26,7 @@ import Game from "./Scripts/Game.js";
 
         let game = new Game(gameConfig);
 
+    
         // game.init(); // Not needed if config is set to autoStart
-
-        
-        window.reset = () => {
-            console.log('restarting...');
-            game = new Game(gameConfig);
-        }
 
     })();
