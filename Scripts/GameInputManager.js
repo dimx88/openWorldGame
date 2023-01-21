@@ -1,3 +1,5 @@
+import utils from "./utils.js";
+
 export default class GameInputManager {
     constructor(config) {
 
@@ -32,7 +34,10 @@ export default class GameInputManager {
                 player.updateSelector(direction);
             }
             else {
-                player.walk(direction)
+                const destination = utils.getNextTileAtDirection(player.position, direction);
+                const tileAtDestination = game.currentMap.tiles[destination.x][destination.y];
+                
+                tileAtDestination !== 'w' && player.walk(direction);
                 shouldUpdate = true;
             };
         }

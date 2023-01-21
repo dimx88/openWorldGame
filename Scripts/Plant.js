@@ -4,8 +4,8 @@ export default class Plant extends GameObject {
     constructor(config) {
         super(config);
         this.level = 0;
+        this.maxLevel = 4;
         this.progress = config.initialProgress || 0;
-        this.levelSprites = [0, 1, 2, 3, 5];
         this.levelUpThreshold = config.levelUpThreshold || 10;
         this.started = false;
         this.dead = false;
@@ -20,7 +20,7 @@ export default class Plant extends GameObject {
 
         this.progress += 1;
         if (this.progress >= this.levelUpThreshold) {
-            if (this.level < this.levelSprites.length - 1) {
+            if (this.level < this.maxLevel) {
                 this.levelUp()
             }
             // } else {
@@ -50,7 +50,7 @@ export default class Plant extends GameObject {
             (this.position.x - tileOffset.x) * tileSize,
             (this.position.y - tileOffset.y) * tileSize,
             tileSize,
-            tileSize
+                tileSize
         );
     }
 }

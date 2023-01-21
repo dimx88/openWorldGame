@@ -1,5 +1,4 @@
 import Player from "./Player.js";
-import Game from "./Game.js";
 
 export default class Map {
     constructor(config) {
@@ -74,17 +73,6 @@ export default class Map {
         // for (let obj of this.objects) {
         for (let obj of window.game.objectManager.objects) {
             obj.render(tileOffset);
-            // ctx.drawImage(
-            //     obj.sprite,
-            //     Math.random() > 0.5 ? 0 : tileSize,  
-            //     0,
-            //     tileSize,
-            //     tileSize,
-            //     (obj.position.x - tileOffset.x) * tileSize,
-            //     (obj.position.y - tileOffset.y) * tileSize,
-            //     tileSize,
-            //     tileSize
-            // );;
         }
 
     }
@@ -93,20 +81,13 @@ export default class Map {
         const { player, tileSize, ctx } = this;
         const eyeSize = 10;
 
-        // 
-        //  Todo -> Replace this with a sprite
-
-        // Head
         ctx.save();
 
         ctx.shadowColor = 'rgba(236, 255, 91, 0.50)';
-        // ctx.shadowColor = 'rgba(0, 0, 0, 0.50)';
         ctx.shadowBlur = 8;
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 8;
 
-        // ctx.fillStyle = 'yellow';
-        // ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
         ctx.drawImage(images.player, (player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize);
 
         ctx.restore();
@@ -121,9 +102,9 @@ export default class Map {
         ctx.strokeStyle = 'lime';
         ctx.setLineDash([5]);
         ctx.shadowColor = "black";
-        ctx.shadowBlur = 8;
-        ctx.shadowOffsetX = 6;
-        ctx.shadowOffsetY = 6;
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 4;
         const selectorPos = player.selector;
         ctx.strokeRect((selectorPos.x - tileOffset.x) * tileSize, (selectorPos.y - tileOffset.y) * tileSize, tileSize, tileSize);
 

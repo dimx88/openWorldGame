@@ -49,7 +49,10 @@ export default class Player extends GameObject {
     }
 
     onActionKeyDown(e) {
-        // game.currentMap.tiles[this.selector.x][this.selector.y] = 'g';
+        const targetTile = game.currentMap.tiles[this.selector.x][this.selector.y];
+
+        if (targetTile === 'w') return;
+
         const plant = new Plant({
             position: this.selector,
             sprite: window.images.plant
