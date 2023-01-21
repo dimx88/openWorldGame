@@ -36,9 +36,11 @@ export default class GameInputManager {
             else {
                 const destination = utils.getNextTileAtDirection(player.position, direction);
                 const tileAtDestination = game.currentMap.tiles[destination.x][destination.y];
-                
-                tileAtDestination !== 'w' && player.walk(direction);
-                shouldUpdate = true;
+
+                if (tileAtDestination !== 'w' && game.currentMap.isPositionWithinBounds(destination)) {
+                    player.walk(direction);
+                    shouldUpdate = true;
+                }
             };
         }
 

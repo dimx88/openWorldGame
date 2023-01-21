@@ -49,7 +49,7 @@ export default class Map {
                 // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
                 ctx.drawImage(
                     spriteMap[tile],
-                    Math.random() > 0.5 ? 0 : tileSize,  
+                    Math.random() > 0.5 ? 0 : tileSize,
                     0,
                     tileSize,
                     tileSize,
@@ -110,6 +110,10 @@ export default class Map {
 
         ctx.restore();
 
+    }
+
+    isPositionWithinBounds(position) {
+        return position.x < this.tiles.length && position.x >= 0 && position.y < this.tiles[0].length && position.y >= 0;
     }
 
 }
