@@ -11,6 +11,7 @@ export default class GameInputManager {
         const player = game.currentMap.player;
         let direction = null;
 
+        let shouldUpdate = false;
 
         // WASD -> player interaction selector positioning
         const TABLE = { 'KeyW': 'up', 'KeyA': 'left', 'KeyS': 'down', 'KeyD': 'right' };
@@ -27,7 +28,13 @@ export default class GameInputManager {
         if (e.code === 'ArrowDown') direction = 'down';
 
         if (direction) {
-            e.ctrlKey ? player.updateSelector(direction) : player.walk(direction);
+            if (e.ctrlKey || e.shiftKey) {
+                player.updateSelector(direction);
+            }
+            else {
+                player.walk(direction)
+                shouldUpdate = true;
+            };
         }
 
 
@@ -35,9 +42,11 @@ export default class GameInputManager {
         // Action key
         if (e.code === 'Space') {
             player.onActionKeyDown(e);
+            shouldUpdate = true;
         }
-        console.log(e);
 
-        game.update();
+
+        shouldUpdate && game.update();
+        game.render(game.getTileOffset());
     }
 }

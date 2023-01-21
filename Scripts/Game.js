@@ -55,7 +55,7 @@ export default class Game {
         // document.addEventListener('keydown', this.handleKeyboardInput.bind(this));
         this.inputManager = new GameInputManager({ game: this });
 
-        this.soundManager = new SoundManager({});
+        this.soundManager = new SoundManager();
     }
 
 

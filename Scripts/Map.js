@@ -1,4 +1,4 @@
-import Character from "./Character.js";
+import Player from "./Player.js";
 import Game from "./Game.js";
 
 export default class Map {
@@ -11,7 +11,7 @@ export default class Map {
         this.objects = config.mapData.objects || {};
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
 
-        this.player = new Character(config.mapData.player);
+        this.player = new Player(config.mapData.player);
     }
 
     getDimensions() {
@@ -72,7 +72,7 @@ export default class Map {
         const eyeSize = 10;
 
         // 
-        // Temp - draw player. Replace this with a sprite
+        //  Todo -> Replace this with a sprite
 
         // Head
         ctx.save();
@@ -89,8 +89,9 @@ export default class Map {
 
         // Eyes
         ctx.fillStyle = 'blue';
-        ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, eyeSize, eyeSize);
-        ctx.fillRect((player.position.x - tileOffset.x) * tileSize - eyeSize + tileSize, (player.position.y - tileOffset.y) * tileSize, eyeSize, eyeSize);
+        const n = 10;
+        ctx.fillRect((player.position.x - tileOffset.x) * tileSize + n, (player.position.y - tileOffset.y) * tileSize + n, eyeSize, eyeSize);
+        ctx.fillRect((player.position.x - tileOffset.x) * tileSize - n - eyeSize + tileSize, (player.position.y - tileOffset.y) * tileSize + n, eyeSize, eyeSize);
 
     }
 

@@ -22,20 +22,22 @@ export default class Plant extends GameObject {
 
         this.progress += 1;
         if (this.progress >= this.levelUpThreshold) {
-            if (this.level < this.levelColors.length - 1)
+            if (this.level < this.levelColors.length - 1) {
                 this.levelUp()
-            else
-                this.dead = true;
-        }
-
-
+            }
+        // } else {
+        //     this.dead = true;
+        // }
     }
 
 
+}
 
-    levelUp() {
-        this.progress = 0;
-        this.level += 1;
-        this.color = this.levelColors[this.level];
-    }
+
+
+levelUp() {
+    this.progress = 0;
+    this.level += 1;
+    this.color = this.levelColors[this.level];
+}
 }

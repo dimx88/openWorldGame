@@ -2,7 +2,7 @@ import GameObject from "./GameObject.js";
 import Plant from "./Plant.js";
 import utils from "./utils.js";
 
-export default class Character extends GameObject {
+export default class Player extends GameObject {
     constructor(config) {
         super(config);
         /* Inherited params: 
@@ -29,7 +29,7 @@ export default class Character extends GameObject {
         this.position = positionTable[direction];
         this.updateSelector(direction);
 
-        window.game.soundManager.playOneOfSounds(['step1', 'step2', 'step3']);
+        window.game.soundManager.playOneOfSounds(['step2', 'step3']);
     }
 
     setDirection(direction) {

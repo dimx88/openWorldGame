@@ -9,7 +9,10 @@ export default class SoundManager {
 
 
     play(id) {
-        this.sounds[id] = new Audio(this.sounds[id].src);
+        // this.sounds[id] = new Audio(this.sounds[id].src);
+
+        this.sounds[id].pause();
+        this.sounds[id].currentTime = 0;
         this.sounds[id].play();
         console.log('playing', id)
     }

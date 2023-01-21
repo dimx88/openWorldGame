@@ -25,9 +25,17 @@ const utils = {
             y: position.y + (Math.random() > 0.5 ? 1 : -1)
         }
     },
-    
-    getTileAtDirection() {
-        
+
+    getNextTileAtDirection(position, direction) {
+        const d = {
+            x: Number(direction === 'right') - Number(direction === 'left'),
+            y: Number(direction === 'down') - Number(direction === 'up'),
+        };
+        return { x: position.x + d.x, y: position.y + d.y };
+    },
+
+    addVectors(vec1, vec2) {
+        return { x: vec1.x + vec2.x, y: vec1.y + vec2.y };
     }
 }
 
