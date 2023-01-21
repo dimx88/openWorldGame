@@ -86,13 +86,6 @@ export default class Map {
         ctx.fillRect((player.position.x - tileOffset.x) * tileSize, (player.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
 
         ctx.restore();
-
-        // Eyes
-        ctx.fillStyle = 'blue';
-        const n = 10;
-        ctx.fillRect((player.position.x - tileOffset.x) * tileSize + n, (player.position.y - tileOffset.y) * tileSize + n, eyeSize, eyeSize);
-        ctx.fillRect((player.position.x - tileOffset.x) * tileSize - n - eyeSize + tileSize, (player.position.y - tileOffset.y) * tileSize + n, eyeSize, eyeSize);
-
     }
 
     renderSelector(tileOffset = { x: 0, y: 0 }) {

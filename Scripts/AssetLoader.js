@@ -11,7 +11,7 @@ export default class AssetLoader {
     }
 
     async loadImages() {
-        
+        console.log('loading assets...');
         for (let img of this.loadingList) {
 
             const newImage = new Image();
@@ -20,7 +20,7 @@ export default class AssetLoader {
             await newImage.decode();
 
             this.images[img.name]  = newImage;
-            console.log(`loaded ${img.name}`);
+            console.log(`loaded ${img.source}`);
         }
 
         window.images = this.images;

@@ -9,6 +9,7 @@ export default class Game {
         // Display settings
         this.container = config.container;
         this.windowSize = { width: config.tileSize * config.numberOfTilesOnScreen.x, height: config.tileSize * config.numberOfTilesOnScreen.y };
+        this.resolutionScale = config.resolutionScale || 5;
         this.canvas = null;
 
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
@@ -70,6 +71,9 @@ export default class Game {
         canvas.setAttribute('id', 'main-canvas');
         canvas.setAttribute('width', this.windowSize.width);
         canvas.setAttribute('height', this.windowSize.height);
+
+        canvas.style.width = `${this.windowSize.width * this.resolutionScale}px`;
+        canvas.style.height = `${this.windowSize.height * this.resolutionScale}px`;
 
         this.container.appendChild(canvas);
 
