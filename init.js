@@ -12,6 +12,7 @@ import Game from "./Scripts/Game.js";
         loader.add('soil', './Sprites/soil.png');
         loader.add('water', './Sprites/water.png');
         loader.add('grass', './Sprites/grass.png');
+        loader.add('plant', './Sprites/plant.png');
         await loader.loadImages();
 
 
@@ -20,7 +21,8 @@ import Game from "./Scripts/Game.js";
             autoStart: true,
             container: document.querySelector('.container'), 
             tileSize: 16,  // Pixel dimensions of a single tile
-            numberOfTilesOnScreen: {x: 7, y: 7},  // Currently must use odd values so we can place the character in the middle
+            numberOfTilesOnScreen: {x: 15, y: 15},  // Currently must use odd values so we can place the character in the middle
+            resolutionScale: 3
         };
 
 

@@ -5,10 +5,8 @@ export default class Plant extends GameObject {
         super(config);
         this.level = 0;
         this.progress = config.initialProgress || 0;
+        this.levelSprites = [0, 1, 2, 3, 5];
         this.levelUpThreshold = config.levelUpThreshold || 10;
-        this.levelColors = ['#666139', '#5d703f', '#7eb05a', '#69e03a'];
-        this.color = this.levelColors[0];
-        this.levelSprites = [];
         this.started = false;
         this.dead = false;
     }
@@ -22,7 +20,7 @@ export default class Plant extends GameObject {
 
         this.progress += 1;
         if (this.progress >= this.levelUpThreshold) {
-            if (this.level < this.levelColors.length - 1) {
+            if (this.level < this.levelSprites.length - 1) {
                 this.levelUp()
             }
             // } else {
@@ -38,6 +36,21 @@ export default class Plant extends GameObject {
     levelUp() {
         this.progress = 0;
         this.level += 1;
-        this.color = this.levelColors[this.level];
+    }
+
+    render(tileOffset) {
+        const {tileSize} = window.game;
+        
+        game.canvas.ctx.drawImage(
+            this.sprite,
+            this.level * tileSize,
+            0,
+            tileSize,
+            tileSize,
+            (this.position.x - tileOffset.x) * tileSize,
+            (this.position.y - tileOffset.y) * tileSize,
+            tileSize,
+            tileSize
+        );
     }
 }

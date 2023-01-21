@@ -15,7 +15,7 @@ export default class GameObject {
         this.onUpdate?.();
     }
 
-    render() {
+    render(offset) {
         
     }
 }

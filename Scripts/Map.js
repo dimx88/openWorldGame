@@ -45,7 +45,21 @@ export default class Map {
         for (let x = minX; x < maxX; x++) {
             for (let y = minY; y < maxY; y++) {
                 const tile = this.tiles[x][y];
-                ctx.drawImage(spriteMap[tile], (x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize);
+                // ctx.drawImage(spriteMap[tile], (x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize);
+
+                // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+                ctx.drawImage(
+                    spriteMap[tile],
+                    Math.random() > 0.5 ? 0 : tileSize,  
+                    0,
+                    tileSize,
+                    tileSize,
+                    (x - tileOffset.x) * tileSize,
+                    (y - tileOffset.y) * tileSize,
+                    tileSize,
+                    tileSize
+                );
+
                 // ctx.fillStyle = colorMap[tile];
                 // ctx.fillRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
 
@@ -56,16 +70,22 @@ export default class Map {
 
     renderObjects(tileOffset = { x: 0, y: 0 }) {
         const { tileSize, ctx } = this;
-        ctx.save();
+
         // for (let obj of this.objects) {
         for (let obj of window.game.objectManager.objects) {
-            ctx.fillStyle = obj.color;
-            ctx.fillRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
-            // ctx.strokeStyle = 'yellow';
-            // ctx.lineWidth = 1;
-            // ctx.strokeRect((obj.position.x - tileOffset.x) * tileSize, (obj.position.y - tileOffset.y) * tileSize, tileSize, tileSize);
+            obj.render(tileOffset);
+            // ctx.drawImage(
+            //     obj.sprite,
+            //     Math.random() > 0.5 ? 0 : tileSize,  
+            //     0,
+            //     tileSize,
+            //     tileSize,
+            //     (obj.position.x - tileOffset.x) * tileSize,
+            //     (obj.position.y - tileOffset.y) * tileSize,
+            //     tileSize,
+            //     tileSize
+            // );;
         }
-        ctx.restore();
 
     }
 
