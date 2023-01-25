@@ -26,6 +26,7 @@ export default class Map {
         this.renderObjects(tileOffset);
         this.renderPlayer(tileOffset);
         this.renderSelector(tileOffset);
+
     }
 
     renderTiles(tileOffset = { x: 0, y: 0 }) {

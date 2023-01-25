@@ -16,6 +16,8 @@ export default class Game {
         this.tileSize = config.tileSize;
         this.tileOffset = { x: 0, y: 0 };
 
+        this.refreshRate = config.refreshRate || 1000 / 4;
+
         // Main game data
         this.currentMap = null;
         this.objectManager = null;
@@ -57,6 +59,8 @@ export default class Game {
         this.inputManager = new GameInputManager({ game: this });
 
         this.soundManager = new SoundManager();
+
+        setInterval(() => this.render(this.getTileOffset()), this.refreshRate);
     }
 
 
@@ -88,22 +92,22 @@ export default class Game {
 
         this.objectManager.update();
 
-        this.render(this.getTileOffset());
+        // this.render(this.getTileOffset());
 
     }
 
 
     render(tileOffset) {
         this.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        // this.canvas.ctx.globalAlpha = 0.85;
         this.currentMap.render(tileOffset);
     }
 
     // Calculates the offset needed to display the player in the center
-    getTileOffset() {
-        const player = this.currentMap.player;
+    getTileOffset(target=this.currentMap.player) {
         const offset = {
-            x: player.position.x - ~~(this.numberOfTilesOnScreen.x * 0.5),
-            y: player.position.y - ~~(this.numberOfTilesOnScreen.y * 0.5)
+            x: target.position.x - ~~(this.numberOfTilesOnScreen.x * 0.5),
+            y: target.position.y - ~~(this.numberOfTilesOnScreen.y * 0.5)
         }
         return offset;
     }

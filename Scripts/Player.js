@@ -1,6 +1,5 @@
 import GameObject from "./GameObject.js";
 import Plant from "./Plant.js";
-import utils from "./utils.js";
 
 export default class Player extends GameObject {
     constructor(config) {
@@ -27,9 +26,8 @@ export default class Player extends GameObject {
             down: { x: this.position.x, y: this.position.y + 1 },
         }
         this.position = positionTable[direction];
-        this.updateSelector(direction);
 
-        window.game.soundManager.playOneOfSounds(['step2', 'step3']);
+        window.game.soundManager.playOneOfSounds(['step1', 'step2']);
     }
 
     setDirection(direction) {
@@ -49,6 +47,8 @@ export default class Player extends GameObject {
     }
 
     onActionKeyDown(e) {
+        if (!game.currentMap.isPositionWithinBounds(this.selector)) return;
+
         const targetTile = game.currentMap.tiles[this.selector.x][this.selector.y];
 
         if (targetTile === 'w') return;
@@ -57,7 +57,6 @@ export default class Player extends GameObject {
             position: this.selector,
             sprite: window.images.plant
         });
-
 
         game.objectManager.addObject(plant);
 

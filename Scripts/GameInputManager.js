@@ -31,17 +31,21 @@ export default class GameInputManager {
 
         if (direction) {
             if (e.ctrlKey || e.shiftKey) {
-                player.updateSelector(direction);
             }
             else {
                 const destination = utils.getNextTileAtDirection(player.position, direction);
-                const tileAtDestination = game.currentMap.tiles[destination.x][destination.y];
-
-                if (tileAtDestination !== 'w' && game.currentMap.isPositionWithinBounds(destination)) {
+                const tileAtDestination = game.currentMap.isPositionWithinBounds(destination) ? game.currentMap.tiles[destination.x][destination.y] : null;
+                
+                // player.updateSelector(direction);
+                const objects = game.objectManager.objects;
+                const isObjectAtDestination = objects.some(obj => obj.position.x === destination.x && obj.position.y === destination.y);
+                
+                if (!isObjectAtDestination && tileAtDestination && tileAtDestination !== 'w') {
                     player.walk(direction);
                     shouldUpdate = true;
-                }
+                } 
             };
+            player.updateSelector(direction);
         }
 
 

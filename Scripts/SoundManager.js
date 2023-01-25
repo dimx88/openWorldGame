@@ -1,8 +1,10 @@
 export default class SoundManager {
     constructor(config) {
         this.sounds = {
-            step2: new Audio('../Sounds/bassy_step_2.wav'),
-            step3: new Audio('../Sounds/bassy_step_3.wav'),
+            // step1: new Audio('../Sounds/bassy_step_2.wav'),
+            // step2: new Audio('../Sounds/bassy_step_3.wav'),
+            step1: new Audio('../Sounds/step_1.wav'),
+            step2: new Audio('../Sounds/step_2.wav'),
         };
     }
 
