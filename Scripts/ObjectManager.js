@@ -41,7 +41,7 @@ export default class ObjectManager {
     }
 
     removeObjectAtPosition(pos) {
-        delete this.objects[pos];
+        delete this.objects[`${pos.x},${pos.y}`];
     }
 
 

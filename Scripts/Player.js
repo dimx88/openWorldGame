@@ -48,6 +48,11 @@ export default class Player extends GameObject {
 
     onActionKeyDown(e) {
         if (!game.currentMap.isPositionWithinBounds(this.selector)) return;
+        
+        if (e.ctrlKey) {
+            this.game.objectManager.removeObjectAtPosition(this.selector);
+            return;
+        }
 
         const targetTile = game.currentMap.tiles[this.selector.x][this.selector.y];
 
@@ -57,6 +62,7 @@ export default class Player extends GameObject {
             position: this.selector,
             sprite: window.images.plant
         });
+
 
         game.objectManager.addObject(plant);
 
