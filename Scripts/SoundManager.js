@@ -5,6 +5,7 @@ export default class SoundManager {
             // step2: new Audio('../Sounds/bassy_step_3.wav'),
             step1: new Audio('../Sounds/step_1.wav'),
             step2: new Audio('../Sounds/step_2.wav'),
+            box_open: new Audio('../Sounds/box_open.wav'),
         };
     }
 

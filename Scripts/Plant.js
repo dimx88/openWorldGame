@@ -1,5 +1,5 @@
-import Game from "./Game.js";
 import GameObject from "./GameObject.js";
+
 export default class Plant extends GameObject {
     constructor(config) {
         super(config);
@@ -23,9 +23,6 @@ export default class Plant extends GameObject {
             if (this.level < this.maxLevel) {
                 this.levelUp()
             }
-            // } else {
-            //     this.dead = true;
-            // }
         }
 
 

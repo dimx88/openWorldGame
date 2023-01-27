@@ -1,5 +1,6 @@
 import GameObject from "./GameObject.js";
 import Plant from "./Plant.js";
+import TreasureBox from "./TreasureBox.js";
 
 export default class Player extends GameObject {
     constructor(config) {
@@ -58,13 +59,25 @@ export default class Player extends GameObject {
 
         if (targetTile === 'w') return;
 
-        const plant = new Plant({
+      
+
+        const objectAtSelector = game.objectManager.objects[`${this.selector.x},${this.selector.y}`] || null;
+        if (objectAtSelector) {
+            objectAtSelector.onInteract();
+            return;
+        }
+          // const plant = new Plant({
+        //     position: this.selector,
+        //     sprite: window.images.plant
+        // });
+
+        const box = new TreasureBox({
             position: this.selector,
-            sprite: window.images.plant
+            sprite: window.images.treasure_box
         });
 
 
-        game.objectManager.addObject(plant);
+        game.objectManager.addObject(box);
 
     }
 }

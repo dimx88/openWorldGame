@@ -6,6 +6,11 @@ export default class GameInputManager {
         addEventListener('keydown', this.onKeyDown.bind(this));
     }
 
+    isObjectAtSelector() {
+        const selector = utils.getNextTileAtDirection(player.position, direction);
+       return game.objectManager.objects[`${selector.x},${selector.y}`] || false;
+    }
+
     onKeyDown(e) {
         // Todo: make better
 

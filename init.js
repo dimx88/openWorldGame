@@ -13,6 +13,7 @@ import Game from "./Scripts/Game.js";
         loader.add('water', './Sprites/water.png');
         loader.add('grass', './Sprites/grass.png');
         loader.add('plant', './Sprites/plant.png');
+        loader.add('treasure_box', './Sprites/treasure_box.png');
         await loader.loadImages();
 
 
@@ -29,6 +30,5 @@ import Game from "./Scripts/Game.js";
         let game = new Game(gameConfig);
 
     
-        // game.init(); // Not needed if config is set to autoStart
 
     })();
