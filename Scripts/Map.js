@@ -7,7 +7,7 @@ export default class Map {
         this.tileSize = config.tileSize;
 
         this.tiles = config.mapData.tiles;
-        this.objects = config.mapData.objects || {};
+        // this.objects = {};
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
 
         this.player = new Player(config.mapData.player);
@@ -29,23 +29,34 @@ export default class Map {
 
     }
 
+    getOnScreenTileRange(tileOffset) {
+        // Returns the range of tiles that are on screen
+
+        const { numberOfTilesOnScreen } = this
+
+        const minX = Math.max(0, tileOffset.x);
+        const minY = Math.max(0, tileOffset.y);
+        const maxY = Math.min(numberOfTilesOnScreen.y + minY, this.tiles[0].length);
+        const maxX = Math.min(numberOfTilesOnScreen.x + minX, this.tiles.length);
+
+        return {
+            from: { x: minX, y: minY },
+            to: { x: maxX, y: maxY }
+        };
+    }
+
     renderTiles(tileOffset = { x: 0, y: 0 }) {
         const { canvas, tileSize, numberOfTilesOnScreen, ctx } = this;
 
         const colorMap = { g: 'green', s: 'brown', w: 'cyan', x: 'white' };
         const spriteMap = { g: images.grass, s: images.soil, w: images.water };
 
-        // Calculate what area of the grid we actually want to render
-        const minX = Math.max(0, tileOffset.x);
-        const minY = Math.max(0, tileOffset.y);
-        const maxY = Math.min(numberOfTilesOnScreen.y + minY, this.tiles[0].length);
-        const maxX = Math.min(numberOfTilesOnScreen.x + minX, this.tiles.length);
+        const range = this.getOnScreenTileRange(tileOffset);
 
         // Render
-        for (let x = minX; x < maxX; x++) {
-            for (let y = minY; y < maxY; y++) {
+        for (let x = range.from.x; x < range.to.x; x++) {
+            for (let y = range.from.y; y < range.to.y; y++) {
                 const tile = this.tiles[x][y];
-                // ctx.drawImage(spriteMap[tile], (x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize);
 
                 // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
                 ctx.drawImage(
@@ -71,9 +82,15 @@ export default class Map {
     renderObjects(tileOffset = { x: 0, y: 0 }) {
         const { tileSize, ctx } = this;
 
-        // for (let obj of this.objects) {
-        for (let obj of window.game.objectManager.objects) {
-            obj.render(tileOffset);
+
+
+        const range = this.getOnScreenTileRange(tileOffset);
+        const objects = game.objectManager.objects;
+        
+        for (let x = range.from.x; x < range.to.x; x++) {
+            for (let y = range.from.y; y < range.to.y; y++) {
+                objects[`${x},${y}`]?.render(tileOffset);  
+            }
         }
 
     }

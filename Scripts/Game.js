@@ -7,15 +7,13 @@ import GameInputManager from './GameInputManager.js';
 export default class Game {
     constructor(config) {
         // Display settings
+        this.canvas = null;
         this.container = config.container;
         this.windowSize = { width: config.tileSize * config.numberOfTilesOnScreen.x, height: config.tileSize * config.numberOfTilesOnScreen.y };
         this.resolutionScale = config.resolutionScale || 5;
-        this.canvas = null;
-
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
         this.tileSize = config.tileSize;
         this.tileOffset = { x: 0, y: 0 };
-
         this.refreshRate = config.refreshRate || 1000 / 4;
 
         // Main game data
@@ -53,14 +51,11 @@ export default class Game {
         });
 
         this.objectManager = new ObjectManager(this.currentMap.objects, this.currentMap);
-
-        // Start handling input
-        // document.addEventListener('keydown', this.handleKeyboardInput.bind(this));
         this.inputManager = new GameInputManager({ game: this });
-
         this.soundManager = new SoundManager();
 
-        setInterval(() => this.render(this.getTileOffset()), this.refreshRate);
+        // setInterval(() => this.render(this.getTileOffset()), this.refreshRate);
+        this.render(this.getTileOffset());
     }
 
 
@@ -90,7 +85,7 @@ export default class Game {
     update() {
         this.currentMap.update();
 
-        this.objectManager.update();
+        this.objectManager.update(this.getTileOffset(this.currentMap.player));
 
         // this.render(this.getTileOffset());
 
@@ -103,7 +98,7 @@ export default class Game {
         this.currentMap.render(tileOffset);
     }
 
-    // Calculates the offset needed to display the player in the center
+    // Calculates amount of tile offset needed to display the target (player) in the center
     getTileOffset(target=this.currentMap.player) {
         const offset = {
             x: target.position.x - ~~(this.numberOfTilesOnScreen.x * 0.5),

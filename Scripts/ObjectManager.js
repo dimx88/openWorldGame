@@ -6,7 +6,9 @@ export default class ObjectManager {
     constructor(objectsData, map) {
         this.map = map;
         this.objectsData = objectsData || [];
-        this.objects = [];
+
+        this.objects = {};
+
         this.init();
     }
 
@@ -18,25 +20,30 @@ export default class ObjectManager {
         });
     }
 
-    update() {
-        this.objects.forEach(object => {
-            object.update();
-        });
-        
-        this.removeDeadObjects();
+    update(tileOffset) {
+
+        this.updateObjectsWithinRange(this.map.getOnScreenTileRange(tileOffset));
+
+    }
+
+    updateObjectsWithinRange(range) {
+        const {from, to} = range;
+        for (let x = from.x; x < to.x; x++) {
+            for (let y = from.y; y < to.y; y++) {
+                this.objects[`${x},${y}`]?.update();   // If object exists at this location update it
+            }
+        }
     }
 
     addObject(object) {
-        this.objects.push(object);
+        const pos = `${object.position.x},${object.position.y}`;
+        this.objects[pos] = object;
     }
 
-    removeObject(object) {
-        this.objects = this.objects.filter(obj => object !== obj);
+    removeObjectAtPosition(pos) {
+        delete this.objects[pos];
     }
 
-    removeDeadObjects() {
-        this.objects = this.objects.filter(obj => !obj.dead);
-    }
 
 
 
