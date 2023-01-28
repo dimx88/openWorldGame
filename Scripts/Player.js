@@ -1,3 +1,4 @@
+import utils from "./utils.js";
 import GameObject from "./GameObject.js";
 import Plant from "./Objects/Plant.js";
 import TreasureBox from "./Objects/TreasureBox.js";
@@ -16,18 +17,13 @@ export default class Player extends GameObject {
         this.name = config.name || 'manWithNoName';
         this._selector = { x: 0, y: 0 };
         this.updateSelector(this.direction);
+        
     }
 
     walk(direction) {
         this.setDirection(direction);
 
-        const positionTable = {
-            left: { x: this.position.x - 1, y: this.position.y },
-            right: { x: this.position.x + 1, y: this.position.y },
-            up: { x: this.position.x, y: this.position.y - 1 },
-            down: { x: this.position.x, y: this.position.y + 1 },
-        }
-        this.position = positionTable[direction];
+        this.position = utils.addVectors(this.position, direction);
 
         window.game.soundManager.playOneOfSounds(['step1', 'step2']);
     }
@@ -41,11 +37,8 @@ export default class Player extends GameObject {
     }
 
     updateSelector(direction) {
-        const d = {
-            x: Number(direction === 'right') - Number(direction === 'left'),
-            y: Number(direction === 'down') - Number(direction === 'up'),
-        };
-        this._selector = { x: this.position.x + d.x, y: this.position.y + d.y };
+
+        this._selector = { x: this.position.x + direction.x, y: this.position.y + direction.y };
     }
 
     onActionKeyDown(e) {

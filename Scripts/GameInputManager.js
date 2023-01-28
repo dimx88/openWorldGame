@@ -29,19 +29,18 @@ export default class GameInputManager {
 
 
         // Arrow keys -> player movement
-        if (e.code === 'ArrowLeft') direction = 'left';
-        if (e.code === 'ArrowRight') direction = 'right';
-        if (e.code === 'ArrowUp') direction = 'up';
-        if (e.code === 'ArrowDown') direction = 'down';
+        if (e.code === 'ArrowLeft') direction = utils.direction.LEFT;
+        if (e.code === 'ArrowRight') direction = utils.direction.RIGHT;
+        if (e.code === 'ArrowUp') direction = utils.direction.UP;
+        if (e.code === 'ArrowDown') direction = utils.direction.DOWN;
 
         if (direction) {
             if (e.ctrlKey || e.shiftKey) {
             }
             else {
-                const destination = utils.getNextTileAtDirection(player.position, direction);
+                const destination = utils.addVectors(player.position, direction);
                 const tileAtDestination = game.currentMap.isPositionWithinBounds(destination) ? game.currentMap.tiles[destination.x][destination.y] : null;
 
-                // player.updateSelector(direction);
                 const objects = game.objectManager.objects;
                 const isObjectAtDestination = !!(objects[`${destination.x},${destination.y}`]);
 

@@ -31,6 +31,6 @@ export default window.maps = {
             // { id: 'obj2', position: { x: 2, y: 2 }, color: 'blue' },
             // { id: 'obj3', position: { x: 2, y: 12 }, color: 'pink' },
         ],
-        player: { id: 'player1', name: 'bucky', position: { x: 0, y: 0 }, direction: 'right' }
+        player: { id: 'player1', name: 'bucky', position: { x: 0, y: 0 }, direction: { x: 1, y: 0 } }
     }
 };

@@ -1,7 +1,7 @@
 export default class GameObject {
     constructor(config) {
         this.position = config.position || {x:0, y:0};
-        this.direction = config.direction || 'down';
+        this.direction = config.direction || {x:0, y: 1};   // Down
         this.sprite = config.sprite || null;
         this.color = config.color || '#ffffff';
         this.onUpdate = null;

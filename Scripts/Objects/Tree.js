@@ -9,7 +9,7 @@ export default class Tree extends GameObject {
         this.maxChops = 5;
 
         this.started = false;
-        this.chopped = false;
+        this.isChopped = false;
     }
 
     update() {
@@ -19,20 +19,21 @@ export default class Tree extends GameObject {
     onInteract() {
 
         this.timesChopped++;
-        game.soundManager.play('box_open');
+        !this.isChopped && game.soundManager.play('hit_tree');
 
         this.timesChopped >= this.maxChops && this.onDoneChopping();
     }
 
     onDoneChopping() {
-        if (!this.chopped) {
-            this.chopped = true;
+        if (!this.isChopped) {
+            this.isChopped = true;
             this.sprite = window.images.chopped_wood;
             return;
         }
 
         // Todo -> Add chopped wood to inventory
         delete game.objectManager.objects[`${this.position.x},${this.position.y}`];
+        game.soundManager.play('pickup_item');
     }
 
 

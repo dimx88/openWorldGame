@@ -36,6 +36,13 @@ const utils = {
 
     addVectors(vec1, vec2) {
         return { x: vec1.x + vec2.x, y: vec1.y + vec2.y };
+    },
+
+    direction: {
+        LEFT: { x: -1, y: 0 },
+        RIGHT: { x: 1, y: 0 },
+        UP: { x: 0, y: -1 },
+        DOWN: { x: 0, y: 1 },
     }
 }
 

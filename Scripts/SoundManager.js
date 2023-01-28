@@ -6,6 +6,8 @@ export default class SoundManager {
             step1: new Audio('../Sounds/step_1.wav'),
             step2: new Audio('../Sounds/step_2.wav'),
             box_open: new Audio('../Sounds/box_open.wav'),
+            hit_tree: new Audio('../Sounds/hit_tree.wav'),
+            pickup_item: new Audio('../Sounds/pickup_item.wav'),
         };
     }
 

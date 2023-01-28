@@ -94,7 +94,6 @@ export default class Game {
 
     render(tileOffset) {
         this.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        // this.canvas.ctx.globalAlpha = 0.85;
         this.currentMap.render(tileOffset);
     }
 
