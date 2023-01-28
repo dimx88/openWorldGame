@@ -8,7 +8,7 @@ export default class GameInputManager {
 
     isObjectAtSelector() {
         const selector = utils.getNextTileAtDirection(player.position, direction);
-       return game.objectManager.objects[`${selector.x},${selector.y}`] || false;
+        return game.objectManager.objects[`${selector.x},${selector.y}`] || false;
     }
 
     onKeyDown(e) {
@@ -35,6 +35,8 @@ export default class GameInputManager {
         if (e.code === 'ArrowDown') direction = utils.direction.DOWN;
 
         if (direction) {
+            player.direction = direction;
+
             if (e.ctrlKey || e.shiftKey) {
             }
             else {

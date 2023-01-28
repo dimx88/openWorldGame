@@ -27,7 +27,7 @@ export default class ObjectManager {
     }
 
     updateObjectsWithinRange(range) {
-        const {from, to} = range;
+        const { from, to } = range;
         for (let x = from.x; x < to.x; x++) {
             for (let y = from.y; y < to.y; y++) {
                 const position = `${x},${y}`;
@@ -43,6 +43,17 @@ export default class ObjectManager {
     }
 
     removeObjectAtPosition(pos) {
+        delete this.objects[`${pos.x},${pos.y}`];
+    }
+
+    repositionObject(pos, newPos) {
+        // Get the object at the position
+        const obj = this.objects[`${pos.x},${pos.y}`];
+        // Copy it to the new position
+        this.objects[`${newPos.x},${newPos.y}`] = obj;
+        // Change the object's position parameter;
+        obj.position = newPos;
+        // Delete from old position
         delete this.objects[`${pos.x},${pos.y}`];
     }
 
