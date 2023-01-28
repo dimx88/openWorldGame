@@ -89,6 +89,7 @@ export default class Map {
 
         for (let x = range.from.x; x < range.to.x; x++) {
             for (let y = range.from.y; y < range.to.y; y++) {
+                objects[`${x},${y}`]?.renderShadow(tileOffset);
                 objects[`${x},${y}`]?.render(tileOffset);
             }
         }
@@ -100,6 +101,8 @@ export default class Map {
 
         const { player, tileSize, ctx } = this;
         const eyeSize = 10;
+        
+        player.renderShadow(tileOffset);
 
         ctx.save();
 
