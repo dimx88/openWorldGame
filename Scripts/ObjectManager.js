@@ -1,6 +1,11 @@
 import GameObject from "./GameObject.js";
 import utils from "./utils.js";
 
+import Plant from "./Objects/Plant.js";
+import TreasureBox from "./Objects/TreasureBox.js";
+import Tree from "./Objects/Tree.js";
+import Boulder from "./Objects/Boulder.js";
+
 export default class ObjectManager {
     // Runs the object logic
     constructor(objectsData, map) {
@@ -18,6 +23,8 @@ export default class ObjectManager {
             const object = new GameObject(data);
             this.addObject(object);
         });
+
+        this.generateRandomObjects();
     }
 
     update(tileOffset) {
@@ -36,6 +43,39 @@ export default class ObjectManager {
             }
         }
     }
+
+    generateRandomObjects(num = 40) {
+        const types = ['Boulder', 'Plant', 'TreasureBox', 'Tree'];
+ 
+
+        for (let i = 0; i < num; i++) {
+  
+            let obj;
+            const pos = {
+                x: ~~(Math.random() * game.currentMap.tiles.length),
+                y: ~~(Math.random() * game.currentMap.tiles[0].length)
+            }
+
+            switch (types[~~(Math.random() * types.length)]) {
+                case 'Boulder':
+                    obj = new Boulder({ position: pos });
+                    break;
+                case 'Plant':
+                    obj = new Plant({ position: pos });
+                    break;
+                case 'TreasureBox':
+                    obj = new TreasureBox({ position: pos });
+                    break;
+                case 'Tree':
+                    obj = new Tree({ position: pos });
+                    break;
+            }
+
+            this.addObject(obj);
+
+        }
+    }
+
 
     addObject(object) {
         const pos = `${object.position.x},${object.position.y}`;

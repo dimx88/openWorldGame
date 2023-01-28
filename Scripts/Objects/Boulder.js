@@ -26,6 +26,7 @@ export default class Boulder extends GameObject {
 
     move(targetPosition) {
         game.objectManager.repositionObject(this.position, targetPosition);
+        game.soundManager.play('move_boulder');
     }
 
     render(tileOffset) {

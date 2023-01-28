@@ -1,4 +1,8 @@
 import Player from "./Player.js";
+import Plant from "./Objects/Plant.js";
+import TreasureBox from "./Objects/TreasureBox.js";
+import Tree from "./Objects/Tree.js";
+import Boulder from "./Objects/Boulder.js";
 
 export default class Map {
     constructor(config) {
@@ -11,7 +15,9 @@ export default class Map {
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
 
         this.player = new Player(config.mapData.player);
+
     }
+
 
     getDimensions() {
         return { x: this.tiles.length, y: this.tiles[0].length };
@@ -86,10 +92,10 @@ export default class Map {
 
         const range = this.getOnScreenTileRange(tileOffset);
         const objects = game.objectManager.objects;
-        
+
         for (let x = range.from.x; x < range.to.x; x++) {
             for (let y = range.from.y; y < range.to.y; y++) {
-                objects[`${x},${y}`]?.render(tileOffset);  
+                objects[`${x},${y}`]?.render(tileOffset);
             }
         }
 
@@ -117,7 +123,7 @@ export default class Map {
         ctx.save();
 
         ctx.lineWidth = 1;
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = game.objectManager.getObjectAt(player.selector) ? 'lime' : '#ffffff';
         ctx.setLineDash([5]);
         ctx.shadowColor = "black";
         ctx.shadowBlur = 4;

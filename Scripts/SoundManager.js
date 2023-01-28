@@ -8,6 +8,7 @@ export default class SoundManager {
             box_open: new Audio('../Sounds/box_open.wav'),
             hit_tree: new Audio('../Sounds/hit_tree.wav'),
             pickup_item: new Audio('../Sounds/pickup_item.wav'),
+            move_boulder: new Audio('../Sounds/move_boulder.wav'),
         };
     }
 
