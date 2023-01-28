@@ -4,7 +4,9 @@ export default class Tree extends GameObject {
     constructor(config) {
         super(config);
 
-        this.sprite = window.images.tree;
+        this.sprite = window.images.tree_2;
+        this.height = 2;
+
         this.timesChopped = 0;
         this.maxChops = 5;
 
@@ -28,6 +30,7 @@ export default class Tree extends GameObject {
         if (!this.isChopped) {
             this.isChopped = true;
             this.sprite = window.images.chopped_wood;
+            this.height = 1;
             return;
         }
 
@@ -40,17 +43,18 @@ export default class Tree extends GameObject {
 
     render(tileOffset) {
         const { tileSize } = window.game;
-        
+
+        // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
         game.canvas.ctx.drawImage(
             this.sprite,
             0,
             0,
             tileSize,
-            tileSize,
+            tileSize * this.height,
             (this.position.x - tileOffset.x) * tileSize,
-            (this.position.y - tileOffset.y) * tileSize,
+            (this.position.y - tileOffset.y) * tileSize - (tileSize * (this.height - 1)),
             tileSize,
-            tileSize
+            tileSize * this.height
         );
     }
 }

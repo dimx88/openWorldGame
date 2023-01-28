@@ -1,8 +1,5 @@
 import Player from "./Player.js";
-import Plant from "./Objects/Plant.js";
-import TreasureBox from "./Objects/TreasureBox.js";
-import Tree from "./Objects/Tree.js";
-import Boulder from "./Objects/Boulder.js";
+
 
 export default class Map {
     constructor(config) {
@@ -11,7 +8,7 @@ export default class Map {
         this.tileSize = config.tileSize;
 
         this.tiles = config.mapData.tiles;
-        // this.objects = {};
+
         this.numberOfTilesOnScreen = config.numberOfTilesOnScreen;
 
         this.player = new Player(config.mapData.player);
@@ -29,8 +26,8 @@ export default class Map {
 
     render(tileOffset) {
         this.renderTiles(tileOffset);
-        this.renderObjects(tileOffset);
         this.renderPlayer(tileOffset);
+        this.renderObjects(tileOffset);
         this.renderSelector(tileOffset);
 
     }
@@ -77,9 +74,6 @@ export default class Map {
                     tileSize
                 );
 
-                // ctx.fillStyle = colorMap[tile];
-                // ctx.fillRect((x - tileOffset.x) * tileSize, (y - tileOffset.y) * tileSize, tileSize, tileSize);
-
             }
         }
 
@@ -102,6 +96,8 @@ export default class Map {
     }
 
     renderPlayer(tileOffset = { x: 0, y: 0 }) {
+        // Todo -> move into player
+
         const { player, tileSize, ctx } = this;
         const eyeSize = 10;
 
@@ -118,6 +114,8 @@ export default class Map {
     }
 
     renderSelector(tileOffset = { x: 0, y: 0 }) {
+        // Todo -> move into player
+
         const { player, tileSize, ctx } = this;
 
         ctx.save();
