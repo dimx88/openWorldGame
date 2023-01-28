@@ -117,7 +117,7 @@ export default class Map {
         ctx.save();
 
         ctx.lineWidth = 1;
-        ctx.strokeStyle = 'lime';
+        ctx.strokeStyle = '#ffffff';
         ctx.setLineDash([5]);
         ctx.shadowColor = "black";
         ctx.shadowBlur = 4;

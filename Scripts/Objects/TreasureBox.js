@@ -1,9 +1,11 @@
-import GameObject from "./GameObject.js";
+import GameObject from "../GameObject.js";
 
 export default class TreasureBox extends GameObject {
     constructor(config) {
         super(config);
-        this.isOpen = 0;
+
+        this.sprite = window.images.treasure_box;
+        this.isOpen = config.isOpen || 0;
 
         this.started = false;
         this.dead = false;
@@ -17,7 +19,6 @@ export default class TreasureBox extends GameObject {
 
         this.isOpen = this.isOpen === 0 ? 1 : 0;
         game.soundManager.play('box_open');
-        console.log(this.isOpen);
 
     }
 

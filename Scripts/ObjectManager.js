@@ -30,7 +30,9 @@ export default class ObjectManager {
         const {from, to} = range;
         for (let x = from.x; x < to.x; x++) {
             for (let y = from.y; y < to.y; y++) {
-                this.objects[`${x},${y}`]?.update();   // If object exists at this location update it
+                const position = `${x},${y}`;
+                this.objects[position]?.update();   // If object exists at this location update it
+                this.objects[position]?.dead && this.removeObjectAtPosition(position);
             }
         }
     }
@@ -43,8 +45,6 @@ export default class ObjectManager {
     removeObjectAtPosition(pos) {
         delete this.objects[`${pos.x},${pos.y}`];
     }
-
-
 
 
 }

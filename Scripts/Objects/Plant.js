@@ -1,8 +1,10 @@
-import GameObject from "./GameObject.js";
+import GameObject from "../GameObject.js";
 
 export default class Plant extends GameObject {
     constructor(config) {
         super(config);
+        this.sprite = window.images.plant;
+
         this.level = 0;
         this.maxLevel = 4;
         this.progress = config.initialProgress || 0;

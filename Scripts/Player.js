@@ -1,6 +1,7 @@
 import GameObject from "./GameObject.js";
-import Plant from "./Plant.js";
-import TreasureBox from "./TreasureBox.js";
+import Plant from "./Objects/Plant.js";
+import TreasureBox from "./Objects/TreasureBox.js";
+import Tree from "./Objects/Tree.js";
 
 export default class Player extends GameObject {
     constructor(config) {
@@ -49,7 +50,7 @@ export default class Player extends GameObject {
 
     onActionKeyDown(e) {
         if (!game.currentMap.isPositionWithinBounds(this.selector)) return;
-        
+
         if (e.ctrlKey) {
             this.game.objectManager.removeObjectAtPosition(this.selector);
             return;
@@ -59,25 +60,27 @@ export default class Player extends GameObject {
 
         if (targetTile === 'w') return;
 
-      
+
 
         const objectAtSelector = game.objectManager.objects[`${this.selector.x},${this.selector.y}`] || null;
         if (objectAtSelector) {
             objectAtSelector.onInteract();
             return;
         }
-          // const plant = new Plant({
+        // const obj = new Plant({
         //     position: this.selector,
-        //     sprite: window.images.plant
         // });
 
-        const box = new TreasureBox({
+        // const obj = new TreasureBox({
+        //     position: this.selector,
+        // });
+
+
+        const obj = new Tree({
             position: this.selector,
-            sprite: window.images.treasure_box
         });
 
-
-        game.objectManager.addObject(box);
+        game.objectManager.addObject(obj);
 
     }
 }

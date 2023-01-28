@@ -14,6 +14,8 @@ import Game from "./Scripts/Game.js";
         loader.add('grass', './Sprites/grass.png');
         loader.add('plant', './Sprites/plant.png');
         loader.add('treasure_box', './Sprites/treasure_box.png');
+        loader.add('tree', './Sprites/tree.png');
+        loader.add('chopped_wood', './Sprites/chopped_wood.png');
         await loader.loadImages();
 
 
