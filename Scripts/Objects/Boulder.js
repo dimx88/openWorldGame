@@ -14,18 +14,23 @@ export default class Boulder extends GameObject {
     }
 
     onInteract(interactor) {
-        // If target tile is clear, move
-        this.move(interactor.direction);
+        // If target tile is clear and is within map bounds there, move
+
+        const targetPosition = utils.addVectors(this.position, interactor.direction);
+
+        if (!game.objectManager.getObjectAt(targetPosition) && game.currentMap.isPositionWithinBounds(targetPosition)) {
+            this.move(targetPosition);
+
+        }
     }
-    
-    move(direction) {
-        const newPosition = utils.addVectors(this.position, direction);
-        game.objectManager.repositionObject(this.position, newPosition);
+
+    move(targetPosition) {
+        game.objectManager.repositionObject(this.position, targetPosition);
     }
 
     render(tileOffset) {
         const { tileSize } = window.game;
-        
+
         game.canvas.ctx.drawImage(
             this.sprite,
             0,

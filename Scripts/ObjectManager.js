@@ -46,6 +46,10 @@ export default class ObjectManager {
         delete this.objects[`${pos.x},${pos.y}`];
     }
 
+    getObjectAt(pos) {
+        return this.objects[`${pos.x},${pos.y}`] || null;
+    }
+
     repositionObject(pos, newPos) {
         // Get the object at the position
         const obj = this.objects[`${pos.x},${pos.y}`];

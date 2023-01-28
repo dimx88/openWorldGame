@@ -48,11 +48,8 @@ export default class Player extends GameObject {
 
         const targetTile = game.currentMap.tiles[this.selector.x][this.selector.y];
 
-        if (targetTile === 'w') return;
 
-
-
-        const objectAtSelector = game.objectManager.objects[`${this.selector.x},${this.selector.y}`] || null;
+        const objectAtSelector = game.objectManager.getObjectAt(this.selector);
 
         if (objectAtSelector) {
             objectAtSelector.onInteract(this);
